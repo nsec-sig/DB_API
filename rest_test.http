@@ -1,0 +1,51 @@
+@baseUrl = http://localhost:8080
+@v1 = {{baseUrl}}/v1
+
+###
+# 0) API生存確認
+GET {{v1}}/health
+Accept: application/json
+
+###
+# 1) DB疎通確認（Management 接続文字列を使う想定）
+GET {{v1}}/health/db
+Accept: application/json
+
+###
+# 2) 部署一覧取得（本命）
+# 成功時：200 + JSON配列（Deptの配列）
+GET {{v1}}/depts
+Accept: application/json
+
+###
+# 3) （任意）レスポンスが大きい場合の確認用
+# REST Client では "Response" ペインで JSON を整形表示できます
+GET {{v1}}/depts
+Accept: application/json
+
+###
+# ユーザ一覧取得（dept_code = 3 / int < 20 のケース）
+GET {{v1}}/users?dept_code=3
+Accept: application/json
+
+###
+# ユーザ一覧取得（dept_code = 130 / int < 20 のケース）
+GET {{v1}}/users?dept_code=130
+Accept: application/json
+
+### 権限割当一覧取得
+GET {{v1}}/s-authorities
+Accept: application/json
+
+# 認証が必要な場合
+# Authorization: Bearer {{access_token}}
+
+
+### 権限マスタ一覧取得
+GET {{v1}}/m-authorities
+Accept: application/json
+
+
+### Division一覧取得
+GET {{v1}}/s-divisions
+Accept: application/json
